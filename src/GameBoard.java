@@ -6,11 +6,16 @@ public class GameBoard {
     int sizeBorade;
     TypeCell[][] board;
     List<Position> targetSquares;
-  
+    GameBoard parent;
+    public GameBoard(GameBoard parent) {
+        this.parent = parent;
+    }
+
     public GameBoard(int sizeBorade) {
         this.sizeBorade = sizeBorade;
         this.board = new TypeCell[sizeBorade][sizeBorade];
         this.targetSquares = new ArrayList<>(); 
+        this.parent = parent;
         initState();
     }
 
@@ -25,6 +30,7 @@ public class GameBoard {
     public GameBoard deepCopy() {
         GameBoard copy = new GameBoard(this.sizeBorade);
         copy.targetSquares = new ArrayList<>(this.targetSquares);
+        copy.parent = this.parent;
         for (int i = 0; i < this.sizeBorade; i++) {
             copy.board[i] = Arrays.copyOf(this.board[i], this.sizeBorade); 
         }
@@ -286,8 +292,16 @@ public class GameBoard {
       
        return false;
     }
+    public boolean isGoal(){
+        if(targetSquares.isEmpty()){
+            return true;
+        }
+        return false;
+
+    } 
      public List<GameBoard> generatePossibleMoves() {
         List<GameBoard> possibleMoves = new ArrayList<>();
+        this.parent=this.deepCopy();
         GameBoard newBoard=this.deepCopy();
       if(!this.equals(newBoard.moveRight())){
 
@@ -305,11 +319,11 @@ public class GameBoard {
         //System.out.println(!this.equals(newBoard.moveDown()));
         possibleMoves.add(newBoard.moveDown());
      }
-     for (GameBoard gameBoard : possibleMoves) {
-        System.out.println("9999999999999999999999999999999999");
-        gameBoard.printBoard();
-     }
-     System.out.println();
+    //  for (GameBoard gameBoard : possibleMoves) {
+    //     System.out.println("9999999999999999999999999999999999");
+    //     gameBoard.printBoard();
+    //  }
+    //  System.out.println();
         return possibleMoves;
     }
 

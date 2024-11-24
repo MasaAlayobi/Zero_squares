@@ -7,6 +7,7 @@ public class GameBoard {
     TypeCell[][] board;
     List<Position> targetSquares;
     GameBoard parent;
+    int cost;
     public GameBoard(GameBoard parent) {
         this.parent = parent;
     }
@@ -16,6 +17,7 @@ public class GameBoard {
         this.board = new TypeCell[sizeBorade][sizeBorade];
         this.targetSquares = new ArrayList<>(); 
         this.parent = parent;
+        this.cost= cost;
         initState();
     }
 
@@ -31,6 +33,7 @@ public class GameBoard {
         GameBoard copy = new GameBoard(this.sizeBorade);
         copy.targetSquares = new ArrayList<>(this.targetSquares);
         copy.parent = this.parent;
+        copy.cost=this.cost;
         for (int i = 0; i < this.sizeBorade; i++) {
             copy.board[i] = Arrays.copyOf(this.board[i], this.sizeBorade); 
         }
@@ -302,6 +305,7 @@ public class GameBoard {
      public List<GameBoard> generatePossibleMoves() {
         List<GameBoard> possibleMoves = new ArrayList<>();
         this.parent=this.deepCopy();
+        this.cost=1;
         GameBoard newBoard=this.deepCopy();
       if(!this.equals(newBoard.moveRight())){
 

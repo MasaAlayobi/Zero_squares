@@ -78,12 +78,12 @@ public class App {
         // gameBoard.setTile(4, 1, TypeCell.MoveSquare);
         // gameBoard.setTile(5, 1, TypeCell.MoveSquare);
        // gameBoard.setTile(4, 4, TypeCell.TargetSquare);
-       gameBoard.setMoveSquare(3, 2, "b");
+       gameBoard.setMoveSquare(1, 1, "b");
      //  gameBoard.setMoveSquare(3, 1, "y");
-       gameBoard.setTargetSquare(1, 1, "B");
-        gameBoard.setMoveSquare(1, 2, "r");
+       gameBoard.setTargetSquare(3, 2, "B");
+        gameBoard.setMoveSquare(3, 3, "r");
       // gameBoard.setTargetSquare(4, 5, "R");
-       gameBoard.setTargetSquare(3, 3, "R");
+       gameBoard.setTargetSquare(1, 2, "R");
     // gameBoard.setMoveSquare(6, 1, "r");
     // // gameBoard.setTargetSquare(4, 5, "R");
     //  gameBoard.setTargetSquare(1, 6, "R");
@@ -97,8 +97,10 @@ public class App {
       // play move=new play(gameBoard);
      //move.Move();
     Algorithms bf =new Algorithms();
-    bf.dfs(gameBoard);
-    bf.bfs(gameBoard);
+//    bf.dfs(gameBoard);
+//   bf.bfs(gameBoard);
+    bf.recursiveDFS(gameBoard);
+    bf.ucs(gameBoard);
     }
 }
 
@@ -142,8 +144,8 @@ public class App {
 
 
     public boolean matchesColor(TypeCell other) {
-        System.out.println(this.color);
-        System.out.println(other.color);
+        // System.out.println(this.color);
+        // System.out.println(other.color);
         return this.color.equals(other.color.toLowerCase());
     }
 

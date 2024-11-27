@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.PriorityQueue;
@@ -97,6 +98,7 @@ public class Algorithms {
                     currentBoard = currentBoard.parent;
                 }
                 System.out.println("DFS____________________________________");
+                
                 for (GameBoard gameBoard : path) {
                     gameBoard.printBoard();
                 }
@@ -126,7 +128,13 @@ public class Algorithms {
         }
     }
     public void ucs(GameBoard board) {
-        PriorityQueue<GameBoard> pqueue = new PriorityQueue<>();
+        PriorityQueue<GameBoard> pqueue = new PriorityQueue<>(new Comparator<GameBoard>() {
+            @Override
+            public int compare(GameBoard board1, GameBoard board2) {
+             
+                return Integer.compare(board1.cost, board2.cost);
+            }
+        });
         List<GameBoard> visited = new ArrayList<>();
         pqueue.add(board);
     // pqueue.comparator();
@@ -164,7 +172,7 @@ public class Algorithms {
                 System.out.println("UCS____________________________________");
                 break;
             }
-
+            
             List<GameBoard> nextState = currentBoard.generatePossibleMoves();
             for (GameBoard gameBoard : nextState) {
                 boolean isVisited = false;
@@ -175,16 +183,58 @@ public class Algorithms {
                         break;
                     }
                 }
-
+                
                 if (!isVisited) {
-                    gameBoard.cost = currentBoard.cost + gameBoard.cost;
-
+                    gameBoard.cost += currentBoard.cost;
+                    
                     pqueue.add(gameBoard);
                     
                 }
             }
 
         }
+    }
+    List<GameBoard> visited = new ArrayList<>();
+    public void recursiveDFS(GameBoard board) {
+        for (GameBoard visitedBoard : visited) {
+            if (visitedBoard.equals(board)) {
+                return;
+            }
+        }
+        visited.add(board);
+        if (board.isGoal()) {
+            List<GameBoard> path = new ArrayList<>();
+            path.add(board);
+            while (board.parent != null) {
+                path.add(board.parent);
+                board = board.parent;
+            }
+            System.out.println("RDFS____________________________________");
+            
+            for (GameBoard gameBoard : path) {
+                gameBoard.printBoard();
+            }
+            System.out.println(visited.size());
+            System.out.println(path.size());
+            System.out.println("RDFS____________________________________");
+            
+        }
+        List<GameBoard> nextState = board.generatePossibleMoves();
+        for (GameBoard gameBoard : nextState) {
+            boolean isVisited = false;
+
+            for (GameBoard newB : visited) {
+                if (newB.equals(gameBoard)) {
+                    isVisited = true;
+                    break;
+                }
+            }
+
+            if (!isVisited) {
+                recursiveDFS(gameBoard);
+
+            }
+        }  
     }
 
 }

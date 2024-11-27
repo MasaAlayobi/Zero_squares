@@ -17,7 +17,7 @@ public class GameBoard {
         this.board = new TypeCell[sizeBorade][sizeBorade];
         this.targetSquares = new ArrayList<>(); 
         this.parent = parent;
-        this.cost= cost;
+        this.cost= 0;
         initState();
     }
 
@@ -33,7 +33,7 @@ public class GameBoard {
         GameBoard copy = new GameBoard(this.sizeBorade);
         copy.targetSquares = new ArrayList<>(this.targetSquares);
         copy.parent = this.parent;
-        copy.cost=this.cost;
+      //  copy.cost=this.cost;
         for (int i = 0; i < this.sizeBorade; i++) {
             copy.board[i] = Arrays.copyOf(this.board[i], this.sizeBorade); 
         }
@@ -74,7 +74,7 @@ public class GameBoard {
     }
 
     public GameBoard moveRight() {
-             System.out.println(targetSquares);
+            // System.out.println(targetSquares);
         GameBoard newBoard = this.deepCopy();
         int k=0;
         while (k<2) {
@@ -275,20 +275,20 @@ public class GameBoard {
             if(board[row][col].matchesColor(board[nextRow][nextCol])){
                 board[row][col] = TypeCell.Empty;
                 board[nextRow ][nextCol] = TypeCell.Empty;
-                for (Position pos : targetSquares) {
-                    System.out.println("x: " + pos.getX() + ", y: " + pos.getY() + ", value: " + pos.getValue());
-                }
+                // for (Position pos : targetSquares) {
+                //     System.out.println("x: " + pos.getX() + ", y: " + pos.getY() + ", value: " + pos.getValue());
+                // }
                 int rowwww=nextRow;
                 int collll=nextCol;
                 this.targetSquares.removeIf(targetSquare ->  
                 targetSquare.getX()==rowwww && 
                 targetSquare.getY() == collll);
-                System.out.println(")))))))))))))))))))))))");
+              //  System.out.println(")))))))))))))))))))))))");
 
-                for (Position pos : targetSquares) {
-                    System.out.println("x: " + pos.getX() + ", y: " + pos.getY() + ", value: " + pos.getValue());
-                }
-            System.out.println("is goal");
+            //     for (Position pos : targetSquares) {
+            //         System.out.println("x: " + pos.getX() + ", y: " + pos.getY() + ", value: " + pos.getValue());
+            //     }
+            // System.out.println("is goal");
             return true;
         }
        }
@@ -305,23 +305,27 @@ public class GameBoard {
      public List<GameBoard> generatePossibleMoves() {
         List<GameBoard> possibleMoves = new ArrayList<>();
         this.parent=this.deepCopy();
-        this.cost=1;
+       // this.cost= 1;
         GameBoard newBoard=this.deepCopy();
       if(!this.equals(newBoard.moveRight())){
-
-         possibleMoves.add(newBoard.moveRight());
+        GameBoard boardd =newBoard.moveRight();
+        boardd.cost = this.cost + 1;
+        possibleMoves.add(boardd);
       }
       if(!this.equals(newBoard.moveLeft())){
-     
-        possibleMoves.add(newBoard.moveLeft());
+        GameBoard boardd =newBoard.moveLeft();
+        boardd.cost = this.cost + 1;
+        possibleMoves.add(boardd);
      }
      if(!this.equals(newBoard.moveUp())){
-       // System.out.println(!this.equals(newBoard.moveUp()));
-        possibleMoves.add(newBoard.moveUp());
+        GameBoard boardd =newBoard.moveUp();
+        boardd.cost = this.cost + 1;
+        possibleMoves.add(boardd);
      }
      if(!this.equals(newBoard.moveDown())){
-        //System.out.println(!this.equals(newBoard.moveDown()));
-        possibleMoves.add(newBoard.moveDown());
+        GameBoard boardd =newBoard.moveDown();
+        boardd.cost = this.cost + 1;
+        possibleMoves.add(boardd);
      }
     //  for (GameBoard gameBoard : possibleMoves) {
     //     System.out.println("9999999999999999999999999999999999");
@@ -338,11 +342,7 @@ public class GameBoard {
         if (o == null || getClass() != o.getClass())
             return false;
         GameBoard newBoard = (GameBoard) o;
-        // System.out.println("this");
-        // this.printBoard();
-        // System.out.println("new");
-        //  newBoard.printBoard();
-        // System.out.println(Arrays.deepEquals(this.board, newBoard.board));
+     
         return Arrays.deepEquals(this.board, newBoard.board);
     }
     @Override

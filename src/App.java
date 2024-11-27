@@ -100,7 +100,7 @@ public class App {
 //    bf.dfs(gameBoard);
 //   bf.bfs(gameBoard);
     bf.recursiveDFS(gameBoard);
-  //  bf.ucs(gameBoard);
+    bf.ucs(gameBoard);
     }
 }
 

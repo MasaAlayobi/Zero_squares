@@ -7,63 +7,53 @@ public class App {
 
       
       //  TypeCell redTargetSquare = TypeCell.createTargetSquare("R");
-        GameBoard gameBoard = new GameBoard(5);
-        // GameBoard currentBoard = gameBoard.deepCopy();
-        // Set specific tiles
-        gameBoard.setTile(0, 0, TypeCell.Fixed);
-        gameBoard.setTile(0, 1, TypeCell.Fixed);
-        gameBoard.setTile(0, 2, TypeCell.Fixed);
-        gameBoard.setTile(0, 3, TypeCell.Fixed);
-        gameBoard.setTile(0, 4, TypeCell.Fixed);
-        // gameBoard.setTile(0, 5, TypeCell.Fixed);
-        // gameBoard.setTile(0, 6, TypeCell.Fixed);
-        // gameBoard.setTile(0, 7, TypeCell.Fixed);
-        gameBoard.setTile(1, 0, TypeCell.Fixed);
-        gameBoard.setTile(2, 0, TypeCell.Fixed);
-        gameBoard.setTile(3, 0, TypeCell.Fixed);
-        gameBoard.setTile(4, 0, TypeCell.Fixed);
-        // gameBoard.setTile(5, 0, TypeCell.Fixed);
-        // gameBoard.setTile(6, 0, TypeCell.Fixed);
-        // gameBoard.setTile(7,0, TypeCell.Fixed);
-        gameBoard.setTile(4, 0, TypeCell.Fixed);
-        gameBoard.setTile(4, 1, TypeCell.Fixed);
-        gameBoard.setTile(4, 2, TypeCell.Fixed);
-        gameBoard.setTile(4, 3, TypeCell.Fixed);
-        gameBoard.setTile(4, 4, TypeCell.Fixed);
-        // gameBoard.setTile(7, 5, TypeCell.Fixed);
-        // gameBoard.setTile(7, 6, TypeCell.Fixed);
-        // gameBoard.setTile(7, 7, TypeCell.Fixed);
-        // gameBoard.setTile(0, 0, TypeCell.Fixed);
-        gameBoard.setTile(1, 4, TypeCell.Fixed);
-        gameBoard.setTile(2, 4, TypeCell.Fixed);
-        gameBoard.setTile(3, 4, TypeCell.Fixed);
-        gameBoard.setTile(4, 4, TypeCell.Fixed);
-        // gameBoard.setTile(5, 7, TypeCell.Fixed);
-        // gameBoard.setTile(6, 7, TypeCell.Fixed);
-        //
-    //    gameBoard.setTile(6, 3, TypeCell.Fixed);
-    //     gameBoard.setTile(5, 3, TypeCell.Fixed);
-    //     gameBoard.setTile(4, 6, TypeCell.Fixed);
-    //    gameBoard.setTile(4, 7, TypeCell.Fixed);
-         gameBoard.setTile(2, 2, TypeCell.Fixed);
-        // gameBoard.setTile(3, 3, TypeCell.TargetSquare);
-        // gameBoard.setTile(3, 1, TypeCell.MoveSquare);
-        // gameBoard.setTile(4, 2, TypeCell.MoveSquare);
-        // gameBoard.setTile(4, 1, TypeCell.MoveSquare);
-        // gameBoard.setTile(5, 1, TypeCell.MoveSquare);
-       // gameBoard.setTile(4, 4, TypeCell.TargetSquare);
-       gameBoard.setMoveSquare(1, 1, "b");
-     //  gameBoard.setMoveSquare(3, 1, "y");
-       gameBoard.setTargetSquare(3, 2, "B");
-        gameBoard.setMoveSquare(3, 3, "r");
-      // gameBoard.setTargetSquare(4, 5, "R");
-       gameBoard.setTargetSquare(1, 2, "R");
-    // gameBoard.setMoveSquare(6, 1, "r");
-    // // gameBoard.setTargetSquare(4, 5, "R");
-    //  gameBoard.setTargetSquare(1, 6, "R");
-    //   gameBoard.setMoveSquare(1, 1, "a");
-    //   // gameBoard.setTargetSquare(4, 5, "R");
-    //    gameBoard.setTargetSquare(6, 1, "A");
+      String[] boardInput = {
+        "# # # # # # # # # # #",
+        "# # r _ _ # # # # # # ",
+        "# _ _ _ _ # # B _ # # ",
+        "# _ _ _ _ _ _ _ _ # #",
+        "# _ _ _ # # # _ _ R #",
+        "# _ _ _ _ _ _ _ _ # #",
+        "# # b _ # # # # # # #",
+        "# # # # # # # # # # #",
+        "# # # # # # # # # # #",
+        "# # # # # # # # # # #",
+        "# # # # # # # # # # #",
+    };
+
+    // إنشاء اللوحة وتحليل الإدخال
+    int boardSize = boardInput.length; // طول اللوحة
+    GameBoard gameBoard = new GameBoard(boardSize);
+
+    // تحليل الإدخال النصي وتعيين أنواع البلاطات
+    for (int row = 0; row < boardInput.length; row++) {
+        String[] tiles = boardInput[row].split(" "); // تقسيم السطر إلى خلايا
+        for (int col = 0; col < tiles.length; col++) {
+            String tile = tiles[col];
+            switch (tile) {
+                case "#":
+                    gameBoard.setTile(row, col, TypeCell.Fixed);
+                    break;
+                case "_":
+                    gameBoard.setTile(row, col, TypeCell.Empty);
+                    break;
+                case "b":
+                    gameBoard.setMoveSquare(row, col, "b");
+                    break;
+                case "r":
+                    gameBoard.setMoveSquare(row, col, "r");
+                    break;
+                case "R":
+                    gameBoard.setTargetSquare(row, col, "R");
+                    break;
+                case "B":
+                    gameBoard.setTargetSquare(row, col, "B");
+                    break;
+                default:
+                    throw new IllegalArgumentException("رمز غير معروف: " + tile);
+            }
+        }
+    }
         gameBoard.printBoard();
        
        // gameBoard.generatePossibleMoves();
@@ -76,6 +66,7 @@ public class App {
     // bf.recursiveDFS(gameBoard);
     // bf.ucs(gameBoard);
      bf.heuristic(gameBoard);
+     bf.aStar(gameBoard);
     }
 }
 

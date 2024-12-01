@@ -238,19 +238,90 @@ public class Algorithms {
     }
     public int heuristic (GameBoard board){
         int Heuristic = 0;
+        System.out.println(board.moveSquares);
         for (Position posT : board.targetSquares) {
             for (Position posM : board.moveSquares) {
-                if(board.board[posT.getX()][posT.getY()].matchesColor(board.board[posM.getX()][posM.getY()])){
+               
+                if(board.board[posM.getX()][posM.getY()].matchesColor(board.board[posT.getX()][posT.getY()])){
                    int  manhatten =  Math.abs(posM.getX()-posT.getX())+Math.abs(posM.getY()-posT.getY());
                    System.out.println(manhatten);
-                   Heuristic += manhatten;
+                   Heuristic =Heuristic+ manhatten;
                 }
             }
         }
         System.out.println(Heuristic);
         return Heuristic;
     }
+    public void aStar(GameBoard board) {
+        PriorityQueue<GameBoard> pqueue = new PriorityQueue<>(new Comparator<GameBoard>() {
+            @Override
+            public int compare(GameBoard board1, GameBoard board2) {
+             int H1=heuristic(board1);
+             int H2=heuristic(board2);
+             int comp1= H1+ board1.cost;
+             int comp2= H2+ board2.cost;
+                return Integer.compare(comp1, comp2);
+            }
+        });
+        List<GameBoard> visited = new ArrayList<>();
+        pqueue.add(board);
+    // pqueue.comparator();
+        while (!pqueue.isEmpty()) {
+            // GameBoard currentBoard = pqueue.comparator();
+            GameBoard currentBoard = pqueue.poll();
+            boolean isAlreadyVisited = false;
+        for (GameBoard visitedBoard : visited) {
+            if (visitedBoard.equals(currentBoard)) {
+                isAlreadyVisited = true;
+                break;
+            }
+        }
 
+    
+        if (isAlreadyVisited) {
+            continue;
+        }
+
+  
+        visited.add(currentBoard);
+            if (currentBoard.isGoal()) {
+                List<GameBoard> path = new ArrayList<>();
+                path.add(currentBoard);
+                while (currentBoard.parent != null) {
+                    path.add(currentBoard.parent);
+                    currentBoard = currentBoard.parent;
+                }
+                System.out.println("A*____________________________________");
+                for (GameBoard gameBoard : path) {
+                    gameBoard.printBoard();
+                }
+                System.out.println(visited.size());
+                System.out.println(path.size());
+                System.out.println("A*____________________________________");
+                break;
+            }
+            
+            List<GameBoard> nextState = currentBoard.generatePossibleMoves();
+            for (GameBoard gameBoard : nextState) {
+                boolean isVisited = false;
+
+                for (GameBoard newB : visited) {
+                    if (newB.equals(gameBoard)) {
+                        isVisited = true;
+                        break;
+                    }
+                }
+                
+                if (!isVisited) {
+                    gameBoard.cost += currentBoard.cost;
+                    
+                    pqueue.add(gameBoard);
+                    
+                }
+            }
+
+        }
+    }
 }
 // boolean  visit =false;
           

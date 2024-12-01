@@ -242,10 +242,12 @@ public class Algorithms {
             for (Position posM : board.moveSquares) {
                 if(board.board[posT.getX()][posT.getY()].matchesColor(board.board[posM.getX()][posM.getY()])){
                    int  manhatten =  Math.abs(posM.getX()-posT.getX())+Math.abs(posM.getY()-posT.getY());
+                   System.out.println(manhatten);
                    Heuristic += manhatten;
                 }
             }
         }
+        System.out.println(Heuristic);
         return Heuristic;
     }
 

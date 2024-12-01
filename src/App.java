@@ -73,8 +73,9 @@ public class App {
     Algorithms bf =new Algorithms();
 //    bf.dfs(gameBoard);
 //   bf.bfs(gameBoard);
-    bf.recursiveDFS(gameBoard);
-    bf.ucs(gameBoard);
+    // bf.recursiveDFS(gameBoard);
+    // bf.ucs(gameBoard);
+     bf.heuristic(gameBoard);
     }
 }
 

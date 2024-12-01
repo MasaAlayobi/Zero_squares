@@ -1,30 +1,4 @@
 
-
-
-class Position {
-    private final int x;
-    private final int y;
-     private final String value;
-   
-
-    public String getValue() {
-        return value;
-    }
-
-    public Position(int x, int y, String value) {
-        this.x = x;
-        this.y = y;
-        this.value = value;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
-}
 public class App {
   
     public static void main(String[] args) throws Exception {
@@ -160,10 +134,35 @@ public boolean equals(Object o) {
     TypeCell typeCell = (TypeCell) o;
     return type.equals(typeCell.type) && color.equals(typeCell.color);
 }
-
 // @Override
 // public int hashCode() {
 //     return Objects.hash(type, color);
 // }
-
 }
+class Position {
+    private final int x;
+    private final int y;
+     private final String value;
+   
+
+    public String getValue() {
+        return value;
+    }
+
+    public Position(int x, int y, String value) {
+        this.x = x;
+        this.y = y;
+        this.value = value;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+}
+
+
+

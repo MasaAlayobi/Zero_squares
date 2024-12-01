@@ -236,6 +236,18 @@ public class Algorithms {
             }
         }  
     }
+    public int heuristic (GameBoard board){
+        int Heuristic = 0;
+        for (Position posT : board.targetSquares) {
+            for (Position posM : board.moveSquares) {
+                if(board.board[posT.getX()][posT.getY()].matchesColor(board.board[posM.getX()][posM.getY()])){
+                   int  manhatten =  Math.abs(posM.getX()-posT.getX())+Math.abs(posM.getY()-posT.getY());
+                   Heuristic += manhatten;
+                }
+            }
+        }
+        return Heuristic;
+    }
 
 }
 // boolean  visit =false;

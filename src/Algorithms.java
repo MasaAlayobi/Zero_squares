@@ -238,13 +238,11 @@ public class Algorithms {
     }
     public int heuristic (GameBoard board){
         int Heuristic = 0;
-        System.out.println(board.moveSquares);
+       
         for (Position posT : board.targetSquares) {
             for (Position posM : board.moveSquares) {
-               
                 if(board.board[posM.getX()][posM.getY()].matchesColor(board.board[posT.getX()][posT.getY()])){
                    int  manhatten =  Math.abs(posM.getX()-posT.getX())+Math.abs(posM.getY()-posT.getY());
-                   System.out.println(manhatten);
                    Heuristic =Heuristic+ manhatten;
                 }
             }
@@ -321,6 +319,37 @@ public class Algorithms {
             }
 
         }
+    }
+    public void hillClimbing(GameBoard board){
+      
+        GameBoard currentBoard = board;
+    int count=0;
+        while (true) {
+            count++;
+            List<GameBoard> nextState = currentBoard.generatePossibleMoves();
+
+            GameBoard nextBoard = nextState.get(0);
+           
+            int min = heuristic(nextBoard);
+            // nextBoard.printBoard();
+        
+            //  for (GameBoard gameBoard : nextState) {
+            //     int currentHeuristic = heuristic(gameBoard);
+            //     if (currentHeuristic < min) {
+            //         min = currentHeuristic;
+            //         nextBoard = gameBoard;
+            //     }
+            // }
+    
+            if (heuristic(currentBoard)<= min) {
+                System.out.println(count);
+                break;
+            }
+
+            currentBoard= nextBoard;
+           
+        }
+        System.out.println(count);
     }
 }
 // boolean  visit =false;

@@ -58,15 +58,15 @@ public class App {
        
        // gameBoard.generatePossibleMoves();
        // gameBoard.generatePossibleMoves();
-      // play move=new play(gameBoard);
-     //move.Move();
+       play move=new play(gameBoard);
+     move.Move();
     Algorithms bf =new Algorithms();
 //    bf.dfs(gameBoard);
 //   bf.bfs(gameBoard);
     // bf.recursiveDFS(gameBoard);
     // bf.ucs(gameBoard);
-     bf.heuristic(gameBoard);
-     bf.aStar(gameBoard);
+   // bf.heuristic();
+     bf.hillClimbing(gameBoard);
     }
 }
 

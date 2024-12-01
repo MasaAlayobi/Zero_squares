@@ -34,6 +34,7 @@ public class GameBoard {
     public GameBoard deepCopy() {
         GameBoard copy = new GameBoard(this.sizeBorade);
         copy.targetSquares = new ArrayList<>(this.targetSquares);
+        copy.moveSquares = new ArrayList<>(this.moveSquares);
         copy.parent = this.parent;
   
         for (int i = 0; i < this.sizeBorade; i++) {
@@ -100,7 +101,6 @@ public class GameBoard {
             newBoard.board[pos.getX()][pos.getY()]=TypeCell.createTargetSquare(pos.getValue());
         }
        
-        
         return newBoard;
     }
 
@@ -262,10 +262,14 @@ public class GameBoard {
                 
                 int rowwww=nextRow;
                 int collll=nextCol;
+                int roww=row;
+                int coll=col;
                 this.targetSquares.removeIf(targetSquare ->  
                 targetSquare.getX()==rowwww && 
                 targetSquare.getY() == collll);
-           
+                this.moveSquares.removeIf(moveSquare ->  
+                moveSquare.getX()==roww && 
+                moveSquare.getY() == coll);
             return true;
         }
        }
